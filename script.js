@@ -22,17 +22,60 @@ console.log(typeof primeur);
 console.log(primeur.legumes[2]);
 
 */
-//Boucler sur un tableau:
-fruits.forEach(function (item, index, array) {
-  console.log(item, index);
-});
+function gererBibliotheque(bibliotheque) {
+    // Afficher l'inventaire initial
+    console.log("Inventaire actuel:");
+    for (let livre in bibliotheque) {
+        console.log(`${livre}: ${bibliotheque[livre]} exemplaires`);
+    }
 
-//Ajouter à la fin du tableau:
-let newLength = fruits.push("Orange");
-// ["Apple", "Banana", "Orange"]
+    // Demander à l'utilisateur quelle opération il veut effectuer
+    let operation = prompt("Voulez-vous 'ajouter' ou 'retirer' des livres ?").toLowerCase();
 
-// Supprimer un élément par son index:
-let removedItem = fruits.splice(pos, 1); // supprime 1 élément à la position pos
-// ["Strawberry", "Mango"]
+    // Demander le titre du livre
+    let titreLivre = prompt("Quel est le titre du livre ?");
+    
+    // Demander la quantité de livres à ajouter ou retirer
+    let quantite = parseInt(prompt("Combien d'exemplaires voulez-vous ajouter/retirer ?"));
 
-faire des prompt et lui dire d'aller me chercher le livre et lui indiquer le stock 
+    if (operation === "ajouter") {
+        // Ajouter un livre
+        if (bibliotheque[titreLivre]) {
+            bibliotheque[titreLivre] += quantite;
+            console.log(`Ajout de ${quantite} exemplaires de "${titreLivre}".`);
+        } else {
+            bibliotheque[titreLivre] = quantite;
+            console.log(`Création de "${titreLivre}" avec ${quantite} exemplaires.`);
+        }
+    } else if (operation === "retirer") {
+        // Retirer un livre
+        if (bibliotheque[titreLivre]) {
+            if (bibliotheque[titreLivre] >= quantite) {
+                bibliotheque[titreLivre] -= quantite;
+                console.log(`Retrait de ${quantite} exemplaires de "${titreLivre}".`);
+            } else {
+                console.log(`Impossible de retirer ${quantite} exemplaires de "${titreLivre}". Il n'y a que ${bibliotheque[titreLivre]} exemplaires disponibles.`);
+            }
+        } else {
+            console.log(`Le livre "${titreLivre}" n'existe pas dans la bibliothèque.`);
+        }
+    } else {
+        console.log("Opération non valide. Utilisez 'ajouter' ou 'retirer'.");
+    }
+
+    // Afficher l'inventaire mis à jour
+    console.log("\nInventaire mis à jour:");
+    for (let livre in bibliotheque) {
+        console.log(`${livre}: ${bibliotheque[livre]} exemplaires`);
+    }
+}
+
+// Exemple d'utilisation
+let maBibliotheque = {
+    "Ecume des Jours": 150,
+    "Les Trois Mousquetaires": 300,
+    "Les Misérables": 30
+};
+
+// Lancer la fonction pour gérer la bibliothèque
+gererBibliotheque(maBibliotheque);
